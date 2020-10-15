@@ -2848,7 +2848,7 @@ gulp-header@^2.0.9:
     map-stream "0.0.7"
     through2 "^2.0.0"
 
-gulp-load-plugins@^2.0.4:
+gulp-load-plugins@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/gulp-load-plugins/-/gulp-load-plugins-2.0.5.tgz#4b011ee6876a5c1641c51a51886c2df66a14ec19"
   integrity sha512-3FTwhf/qDTKMLpLQfEjDI0O/hRroE9gb0e10MT0j1Je/jIQQETCu6fmQCPOGhipdTaER0VHHF4+e9ISGeomCPw==
