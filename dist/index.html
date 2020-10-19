@@ -31,19 +31,23 @@
       background-color: #718096;
     }
     .th{
-      /*background-color: blue;*/
+      height: 80px;
+      box-shadow: rgba(60, 64, 67, 0.3) 0px 4px 4px 0px;
+      background-color: #f8f8f8;
     }
     .tr{
       border-bottom: 1px solid rgb(236, 236, 237);
     }
-    .td{
+    .th,.td{
       --border-opacity: 1;
       border-color: #718096;
       border-color: rgba(113,128,150,1);
       border-right: 1px solid rgb(236, 236, 237);
+      border-bottom: 1px solid rgb(236, 236, 237);
+      word-break: break-word;
     }
     .th, .td{
-      width: 100px;
+      min-width: 100px;
       padding: 8px 12px;
     }
     .header, .tr{
@@ -59,6 +63,7 @@
       overflow: auto;
       border-bottom: 1px solid rgb(236, 236, 237);
     }
+
     ::-webkit-scrollbar {
       width: 8px;
       height: 8px;
@@ -73,7 +78,7 @@
 </head>
 
 <body>
-  <div class="wrap" style="width: 300px; height: 100px;">
+  <div class="wrap" style="width: 300px; height: 100px; display: none;">
         <div class="area">
           <div class="header">
             <div class="th">th 1</div>
@@ -141,19 +146,20 @@
   </div>
 
 
-<style type="text/css">
-  .body2{
-  }
-  .header2, .body2{
-    display: grid;
-    grid-template-columns: 20% 20% 200px 20% 20%;
-  }
-  .th, .td{
-      padding: 8px 12px;
+  <style type="text/css">
+    .body2{
     }
-</style>
-<br/>
-   <div class="wrap2" style="width: 300px; height: 100px;">
+    .header2, .body2{
+      display: grid;
+      grid-template-columns: 20% 20% 200px 20% 20%;
+    }
+    .th, .td{
+        padding: 8px 12px;
+      }
+  </style>
+
+  <br/>
+  <div class="wrap2" style="width: 300px; height: 100px; overflow: auto; display: none;">
         <div class="area2">
           <div class="header2">
             <div class="th2">th 1</div>
@@ -163,56 +169,166 @@
             <div class="th2">th 5</div>
           </div>
           <div class="body2">
-              <div class="td2">td 1</div>
-              <div class="td2">td 2</div>
-              <div class="td2">td 3</div>
-              <div class="td2">td 4</div>
-              <div class="td2">td 5</div>
-              <div class="td2">td 1</div>
-              <div class="td2">td 2</div>
-              <div class="td2">td 3</div>
-              <div class="td2">td 4</div>
-              <div class="td2">td 5</div>
-              <div class="td2">td 1</div>
-              <div class="td2">td 2</div>
-              <div class="td2">td 3</div>
-              <div class="td2">td 4</div>
-              <div class="td2">td 5</div>
-              <div class="td2">td 1</div>
-              <div class="td2">td 2</div>
-              <div class="td2">td 3</div>
-              <div class="td2">td 4</div>
-              <div class="td2">td 5</div>
-              <div class="td2">td 1</div>
-              <div class="td2">td 2</div>
-              <div class="td2">td 3</div>
-              <div class="td2">td 4</div>
-              <div class="td2">td 5</div>
-              <div class="td2">td 1</div>
-              <div class="td2">td 2</div>
-              <div class="td2">td 3</div>
-              <div class="td2">td 4</div>
-              <div class="td2">td 5</div>
-            </div>
+              <div class="td">td 1</div>
+              <div class="td">td 2</div>
+              <div class="td">td 3</div>
+              <div class="td">td 4</div>
+              <div class="td">td 5</div>
+              <div class="td">td 1</div>
+              <div class="td">td 2</div>
+              <div class="td">td 3</div>
+              <div class="td">td 4</div>
+              <div class="td">td 5</div>
+              <div class="td">td 1</div>
+              <div class="td">td 2</div>
+              <div class="td">td 3</div>
+              <div class="td">td 4</div>
+              <div class="td">td 5</div>
+              <div class="td">td 1</div>
+              <div class="td">td 2</div>
+              <div class="td">td 3</div>
+              <div class="td">td 4</div>
+              <div class="td">td 5</div>
+              <div class="td">td 1</div>
+              <div class="td">td 2</div>
+              <div class="td">td 3</div>
+              <div class="td">td 4</div>
+              <div class="td">td 5</div>
+              <div class="td">td 1</div>
+              <div class="td">td 2</div>
+              <div class="td">td 3</div>
+              <div class="td">td 4</div>
+              <div class="td">td 5</div>
           </div>
         </div>
+    </div>
   </div>
 
 
+    <div id="render" style="width:500px; height:300px; margin: 0 auto" class=""></div>
+
+
+
   <!-- Add your site or application content here -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
   <script src="js/vendor/modernizr-3.11.3.min.js"></script>
   <script src="js/app.js"></script>
+
   <script type="text/javascript">
-    var css = '.td2:nth-child(-n+5){ background-color: red; position: sticky; top: 0;}';
-    var style = document.createElement('style');
+    window.Datatable = function (idElement, config =[]) {
+        const DEFAULT_OPTIONS = {};
+        let instances = {};
+        let option = {
+          ajaxUrl: '',
+          columns:[
+                { 'data': 'apikey' },
+                { 'data': 'name' },
+                { 'data': 'cuisines' },
+                { 'data': 'deeplink' },
+                { 'data': 'id' },
+          ]
+        }
+        let data = [];
+        let dataHeader = [1,2,3,4,5];
+        let css;
+        let _idElement;
+        let _idAreaData = 'datatable-body'
+        datatable(idElement, config)
+        function datatable(idElement, config = []){
+          console.log(dataHeader)
+          option.ajaxUrl = config['ajaxUrl']
+          _idElement = idElement
+          css = `.body2 .th{ position: sticky; top: 0;}`;
+          makeHeaderData()
+          calcAjax()
+          makeCssHeader()
+        }
 
-    if (style.styleSheet) {
-        style.styleSheet.cssText = css;
-    } else {
-        style.appendChild(document.createTextNode(css));
-    }
+        function replace() {
+          console.log('called replace')
+        }
 
-    document.getElementsByTagName('head')[0].appendChild(style);
+        async function calcAjax(){
+          if (!option.ajaxUrl) {
+            return;
+          }
+          let response = await fetch(option.ajaxUrl, {
+            method:'GET'
+          });
+          let result = await response.json();
+          // let bodyTable = '<div>'
+          makeBodyData(result)
+          console.log(result)
+        }
+
+        function htmlToElement(html) {
+            var template = document.createElement('template');
+            html = html.trim(); // Never return a text node of whitespace as the result
+            template.innerHTML = html;
+            return template.content.firstChild;
+        }
+
+        function htmlToElements(html) {
+            let template = document.createElement('template');
+            template.innerHTML = html;
+            return template.content.childNodes;
+        }
+
+
+        function encodeHTML(s) {
+          if (s) {
+              return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;').replace(/'/g, '&quot;');
+          }
+          return '';
+        };
+
+        function makeCssHeader() {
+          let style = document.createElement('style');
+
+          if (style.styleSheet) {
+              style.styleSheet.cssText = css;
+          } else {
+              style.appendChild(document.createTextNode(css));
+          }
+          document.getElementsByTagName('head')[0].appendChild(style);
+
+          percent = Math.round(100 / dataHeader.length * 100) / 100 + '% ';
+          percent = percent.repeat(dataHeader.length)
+          document.getElementById(_idAreaData).style.gridTemplateColumns = percent
+          document.getElementById(_idAreaData).style.display = 'grid'
+          document.getElementById(_idAreaData).style.width = 'max-content'
+          document.getElementById(_idElement).style.overflow = 'auto'
+        }
+
+        function makeHeaderData(data) {
+          let divElement = htmlToElement(`<div><div id="${_idAreaData}" class="body2"></div></div>`)
+
+          for (var i = 0; i < dataHeader.length; i++) {
+            childElement = htmlToElement(`<div class="th">${dataHeader[i]}</div>`)
+            divElement.firstChild.appendChild(childElement)
+          }
+
+          document.getElementById(_idElement).appendChild(divElement)
+        }
+
+        function makeBodyData(data) {
+          for (var i = 0; i < data.length; i++) {
+            for (var j = 0; j < dataHeader.length; j++) {
+              nameColumn = option.columns[j].data
+              childElement = htmlToElement(`<div class="td">${data[i][nameColumn]}</div>`)
+
+              document.getElementById(_idAreaData).appendChild(childElement)
+            }
+          }
+
+        }
+
+    };
+
+  </script>
+
+  <script type="text/javascript">
+    var datatable = new Datatable('render', {'ajaxUrl' : 'http://localhost:3000/restaurants'})
   </script>
 </body>
 
