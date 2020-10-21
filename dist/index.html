@@ -63,7 +63,9 @@
       overflow: auto;
       border-bottom: 1px solid rgb(236, 236, 237);
     }
-
+    #test{
+      overflow: auto;
+    }
     ::-webkit-scrollbar {
       width: 8px;
       height: 8px;
@@ -205,7 +207,7 @@
   </div>
 
 
-    <div id="render" style="width:500px; height:300px; margin: 0 auto" class=""></div>
+    <div id="render" style="width:50%; height:50vh; margin: 0 auto; display: flex; flex-direction: column-reverse;" class=""></div>
 
 
 
@@ -234,6 +236,7 @@
         let _idElement;
         let _idAreaData = 'datatable-body'
         datatable(idElement, config)
+        makeListener()
         function datatable(idElement, config = []){
           console.log(dataHeader)
           option.ajaxUrl = config['ajaxUrl']
@@ -248,11 +251,12 @@
           console.log('called replace')
         }
 
-        async function calcAjax(){
+        async function calcAjax(url){
           if (!option.ajaxUrl) {
             return;
           }
-          let response = await fetch(option.ajaxUrl, {
+          let urlCall = url || option.ajaxUrl
+          let response = await fetch(urlCall, {
             method:'GET'
           });
           let result = await response.json();
@@ -273,7 +277,6 @@
             template.innerHTML = html;
             return template.content.childNodes;
         }
-
 
         function encodeHTML(s) {
           if (s) {
@@ -297,16 +300,55 @@
           document.getElementById(_idAreaData).style.gridTemplateColumns = percent
           document.getElementById(_idAreaData).style.display = 'grid'
           document.getElementById(_idAreaData).style.width = 'max-content'
-          document.getElementById(_idElement).style.overflow = 'auto'
+          document.getElementById(_idElement).style.overflow = 'hidden'
         }
 
         function makeHeaderData(data) {
-          let divElement = htmlToElement(`<div><div id="${_idAreaData}" class="body2"></div></div>`)
+          let divElement = htmlToElement(`<div id="test"><div><div id="${_idAreaData}" class="body2"></div></div></div>`)
 
           for (var i = 0; i < dataHeader.length; i++) {
             childElement = htmlToElement(`<div class="th">${dataHeader[i]}</div>`)
-            divElement.firstChild.appendChild(childElement)
+            divElement.firstChild.firstChild.appendChild(childElement)
+            document.getElementById(_idElement)
           }
+          let pagingElement = htmlToElement(`<div><div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200">
+  <div class="flex-1 flex justify-between sm:hidden">
+    <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+      Previous
+    </a>
+    <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+      Next
+    </a>
+  </div>
+  <div class="flex-1 flex justify-end">
+    <div>
+      <nav class="relative z-0 inline-flex shadow-sm">
+        <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150" aria-label="Previous">
+          <!-- Heroicon name: chevron-left -->
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg>
+        </a>
+        <a href="javascript:void(0)" data-page="1" class="paginate_btn -ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+          1
+        </a>
+        <a href="javascript:void(0)" data-page="2" class="paginate_btn -ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+          2
+        </a>
+        <a href="javascript:void(0)" data-page="3" class="paginate_btn md:inline-flex -ml-px relative items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+          3
+        </a>
+        <a href="#" class="-ml-px relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150" aria-label="Next">
+          <!-- Heroicon name: chevron-right -->
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+          </svg>
+        </a>
+      </nav>
+    </div>
+  </div>
+</div></div>`)
+          document.getElementById(_idElement).appendChild(pagingElement)
 
           document.getElementById(_idElement).appendChild(divElement)
         }
@@ -321,6 +363,26 @@
             }
           }
 
+        }
+
+        function makeListener(){
+          let elements = document.getElementsByClassName("paginate_btn");
+          for (let i = 0; i < elements.length; i++) {
+              elements[i].addEventListener('click', function(event) {
+              event.preventDefault()
+              let page = this.getAttribute("data-page");
+              removeBodyData()
+              calcAjax(option.ajaxUrl + '?_page=' + page);
+            }, false);
+          }
+        }
+
+        function removeBodyData()
+        {
+          let data = document.getElementById(_idAreaData).getElementsByClassName('td')
+          for (var i = data.length - 1; i >= 0; --i) {
+            data[i].remove();
+          }
         }
 
     };
